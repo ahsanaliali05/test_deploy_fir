@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Default cursor */
+* {
+  cursor: auto;
+}
+
+a, button, input, select, textarea, [role="button"] {
+  cursor: pointer;
+}
+
+/* Micro‑interactions */
+.btn-hover-scale {
+  transition: transform 0.1s ease;
+}
+.btn-hover-scale:hover {
+  transform: scale(1.05);
+}
+.btn-hover-scale:active {
+  transform: scale(0.95);
+}
+
+/* Global background */
+body {
+  background-color: #f3f4f6;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Card style */
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
