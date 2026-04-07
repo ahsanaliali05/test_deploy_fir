@@ -1,8 +1,0 @@
-flask
-spyne
-psycopg2-binary
-PyJWT
-python-dotenv
-bcrypt
-lxml
-six
