@@ -1,5 +1,5 @@
 // api.js
-const API_BASE = 'https://fir-management-system.onrender.com';
+const API_BASE = 'https://test-deploy-fir.onrender.com';
 
 function getToken() {
   return localStorage.getItem('token');
