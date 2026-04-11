@@ -71,7 +71,7 @@ function CompletedCases() {
                 <div key={criminal.criminal_id} className="border rounded-lg p-3">
                   {criminal.photo_url && (
                     <img
-                      src={`https://fir-management-system.onrender.com${criminal.photo_url}`}
+                      src={`https://test-deploy-fir.onrender.com${criminal.photo_url}`}
                       alt={criminal.full_name}
                       className="w-16 h-16 object-cover rounded-full mb-2"
                     />
