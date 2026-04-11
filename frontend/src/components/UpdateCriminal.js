@@ -37,7 +37,7 @@ function UpdateCriminal() {
           cnic: criminalData.cnic || '',
         });
         if (criminalData.photo_url) {
-          setPhotoPreview(`https://fir-management-system.onrender.com${criminalData.photo_url}`);
+          setPhotoPreview(`https://test-deploy-fir.onrender.com${criminalData.photo_url}`);
         }
         
         const relationsData = await api.get(`/api/criminal/${id}/full-relations`);
