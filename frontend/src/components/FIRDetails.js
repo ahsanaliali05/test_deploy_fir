@@ -153,7 +153,7 @@ function FIRDetails() {
                     <div key={c.criminal_id} className="border p-3 rounded flex items-center space-x-3">
                       {c.photo_url && (
                         <img
-                          src={`https://fir-management-system.onrender.com${c.photo_url}`}
+                          src={`https://test-deploy-fir.onrender.com${c.photo_url}`}
                           alt={c.full_name}
                           className="w-12 h-12 object-cover rounded-full"
                         />
