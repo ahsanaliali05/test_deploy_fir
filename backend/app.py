@@ -1,14 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from database import get_connection, release_connection
+from database import get_connection, release_connection   # single source of truth
 from spyne import Application
 from spyne.protocol.soap import Soap11
 from spyne.server.wsgi import WsgiApplication
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.utils import secure_filename
 import os
-import psycopg2
-from psycopg2 import pool
 import uuid
 import json
 import traceback  
@@ -47,18 +45,14 @@ from services import (
 import models
 
 app = Flask(__name__)
-CORS(app, origin=["https://testdeploy-8y237z83r-ahsanali48636-6946s-projects.vercel.app/"])
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Correct CORS – allow your Vercel frontend
+CORS(app, origins=["https://testdeploy-bn065brup-ahsanali48636-6946s-projects.vercel.app/"])
 
-conn_pool = psycopg2.pool.SimpleConnectionPool(1, 20, dsn=DATABASE_URL)
-
-def get_connection():
-    return conn_pool.getconn()
-
-def release_connection(conn):
-    conn_pool.putconn(conn)
-
+# ------------------- STATIC FILE SERVING (for photos & evidence) -------------------
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('static', filename)
 
 def get_user_from_token():
     auth_header = request.headers.get('Authorization')
