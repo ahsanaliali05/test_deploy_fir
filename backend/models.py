@@ -190,6 +190,13 @@ def get_criminal_by_cnic(cnic):
     res = _execute(q, (cnic,), fetch_one=True)
     return res[0] if res else None
 
+def is_criminal_by_name(full_name):
+    """Check if a person with the given full name exists in CRIMINALS table."""
+    q = "SELECT 1 FROM CRIMINALS WHERE LOWER(full_name) = LOWER(%s) LIMIT 1"
+    res = _execute(q, (full_name,), fetch_one=True)
+    return res is not None
+
+
 def delete_criminal_relations(criminal_id, conn=None):
     q = 'DELETE FROM CRIMINAL_RELATIONSHIPS WHERE criminal_id = %s'
     _execute(q, (criminal_id,), conn=conn)
