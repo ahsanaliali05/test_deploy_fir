@@ -17,7 +17,7 @@ function CriminalDetailsModal({ criminal, onClose }) {
           {criminal.photo_url && (
             <div className="flex justify-center">
               <img
-                src={`https://fir-management-system.onrender.com${criminal.photo_url}`}
+                src={`https://test-deploy-fir.onrender.com${criminal.photo_url}`}
                 alt={criminal.full_name}
                 className="w-32 h-32 rounded-full object-cover border-2 border-blue-500"
               />
