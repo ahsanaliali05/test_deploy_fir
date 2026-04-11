@@ -124,7 +124,7 @@ function CriminalList() {
             >
               {criminal.photo_url ? (
                 <img
-                  src={`https://fir-management-system.onrender.com${criminal.photo_url}`}
+                  src={`https://test-deploy-fir.onrender.com${criminal.photo_url}`}
                   alt={criminal.full_name}
                   className="w-full h-48 object-cover"
                 />
