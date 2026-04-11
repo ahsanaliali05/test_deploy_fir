@@ -47,7 +47,7 @@ from services import (
 import models
 
 app = Flask(__name__)
-CORS(app, origin=["https://fir-management-system.vercel.app"])
+CORS(app, origin=["https://testdeploy-8y237z83r-ahsanali48636-6946s-projects.vercel.app/"])
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
