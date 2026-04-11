@@ -78,7 +78,7 @@ function CriminalRelations() {
           <div className="flex items-center gap-4 mb-8">
             {criminal.photo_url && (
               <img
-                src={`https://fir-management-system.onrender.com${criminal.photo_url}`}
+                src={`https://test-deploy-fir.onrender.com${criminal.photo_url}`}
                 alt={criminal.full_name}
                 className="w-24 h-24 rounded-full object-cover border-4 border-blue-500 shadow-md"
               />
