@@ -143,7 +143,7 @@ function Dashboard() {
                 <div className="sm:w-1/3 bg-gray-100 flex items-center justify-center p-4">
                   {criminal.photo_url ? (
                     <img
-                      src={`https://fir-management-system.onrender.com${criminal.photo_url}`}
+                      src={`https://test-deploy-fir.onrender.com${criminal.photo_url}`}
                       alt={criminal.full_name}
                       className="w-28 h-28 object-cover rounded-full border-2 border-red-500"
                     />
