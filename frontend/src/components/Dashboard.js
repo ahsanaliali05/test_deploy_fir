@@ -6,6 +6,15 @@ import toast from 'react-hot-toast';
 import api from '../api';
 import ArrestedCriminals from './ArrestedCriminals';
 
+// Moved outside component to fix carousel bug
+const rightsContent = [
+  { title: "Right to Equality", description: "Every citizen is equal before the law. No discrimination based on religion, race, caste, sex, or place of birth." },
+  { title: "Right to Freedom", description: "Freedom of speech, expression, assembly, association, movement, residence, and profession." },
+  { title: "Right against Exploitation", description: "Prohibition of human trafficking, forced labor, and child labor." },
+  { title: "Right to Constitutional Remedies", description: "Right to move to courts for enforcement of fundamental rights." },
+  { title: "Right to Information", description: "Access to information held by public authorities." },
+];
+
 function Dashboard() {
   const role = localStorage.getItem('role');
   const [latestFirs, setLatestFirs] = useState([]);
@@ -29,7 +38,7 @@ function Dashboard() {
           const sorted = [...safeData].sort((a, b) => new Date(b.date_filed) - new Date(a.date_filed));
           setLatestFirs(sorted.slice(0, 5));
         })
-        .catch(console.error);
+        .catch(err => console.error('Failed to fetch latest FIRs:', err));
     }
   }, [role]);
 
@@ -42,7 +51,7 @@ function Dashboard() {
           const sorted = [...safeData].sort((a, b) => new Date(b.date_completed) - new Date(a.date_completed));
           setCompletedCases(sorted);
         })
-        .catch(console.error);
+        .catch(err => console.error('Failed to fetch completed cases:', err));
     }
   }, [role]);
 
@@ -67,18 +76,24 @@ function Dashboard() {
   useEffect(() => {
     if (role === 'Officer') {
       api.get('/api/officer/rank')
-        .then(data => setRank(data.rank || ''))
-        .catch(console.error);
+        .then(data => setRank(data.rank || 'Not assigned'))
+        .catch(err => {
+          console.error('Failed to fetch officer rank:', err);
+          setRank('Not assigned');
+        });
       api.get('/api/officer/pending-investigations')
         .then(data => {
           const safeData = Array.isArray(data) ? data.filter(item => item != null) : [];
           setPendingInvestigations(safeData);
         })
-        .catch(console.error);
+        .catch(err => {
+          console.error('Failed to fetch pending investigations:', err);
+          setPendingInvestigations([]);
+        });
     }
   }, [role]);
 
-  // Auto-scroll for citizen rights (carousel)
+  // Auto-scroll for citizen rights (carousel) – fixed: rightsContent defined outside
   useEffect(() => {
     if (role === 'Citizen') {
       const interval = setInterval(() => {
@@ -86,9 +101,9 @@ function Dashboard() {
       }, 4000);
       return () => clearInterval(interval);
     }
-  }, [role, rightsContent.length]);  
+  }, [role]);
 
-  // JavaScript infinite scroll for completed cases
+  // JavaScript infinite scroll for completed cases (officer/admin only)
   useEffect(() => {
     if (role === 'Citizen') return;
     const scrollContainer = scrollRef.current;
@@ -106,14 +121,6 @@ function Dashboard() {
     animationRef.current = requestAnimationFrame(step);
     return () => cancelAnimationFrame(animationRef.current);
   }, [isPaused, role]);
-
-  const rightsContent = [
-    { title: "Right to Equality", description: "Every citizen is equal before the law. No discrimination based on religion, race, caste, sex, or place of birth." },
-    { title: "Right to Freedom", description: "Freedom of speech, expression, assembly, association, movement, residence, and profession." },
-    { title: "Right against Exploitation", description: "Prohibition of human trafficking, forced labor, and child labor." },
-    { title: "Right to Constitutional Remedies", description: "Right to move to courts for enforcement of fundamental rights." },
-    { title: "Right to Information", description: "Access to information held by public authorities." },
-  ];
 
   const emergencyContacts = [
     { name: "Police", number: "15", icon: <Phone className="w-5 h-5" /> },
@@ -177,7 +184,7 @@ function Dashboard() {
     </div>
   );
 
-  // Infinite scrolling list for completed cases
+  // Infinite scrolling list for completed cases (officer/admin only)
   const CompletedCasesMarquee = () => {
     if (completedCases.length === 0) {
       return <p className="text-gray-500 text-center py-6">No completed cases yet.</p>;
@@ -309,7 +316,7 @@ function Dashboard() {
               <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-800">
                 <Award className="text-yellow-500" /> Your Rank
               </h2>
-              <p className="text-2xl font-bold text-blue-600">{rank || '—'}</p>
+              <p className="text-2xl font-bold text-blue-600">{rank || 'Not assigned'}</p>
             </div>
             <div className="bg-white rounded-2xl shadow-xl p-6">
               <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-800">
