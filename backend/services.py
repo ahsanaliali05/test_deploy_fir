@@ -1,7 +1,13 @@
 import uuid
+import os
 from database import get_connection, release_connection
 import models
+
 from auth import hash_password
+
+
+MEDIA_DIR = 'media'
+os.makedirs(MEDIA_DIR, exist_ok=True)
 
 def create_fir(data, witnesses=None, evidence_items=None, criminals=None):
     conn = get_connection()
